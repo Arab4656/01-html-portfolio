@@ -28,7 +28,7 @@
   margin: 0;
 }
 
-/* Keep text sizing consistent across mobile browsers. */
+/* Keep text sizing consistent and allow smooth anchor navigation. */
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
@@ -44,7 +44,7 @@ body {
   line-height: 1.65;
 }
 
-/* Keep media responsive and aligned with surrounding content. */
+/* Keep images and other media responsive without changing their proportions. */
 img,
 picture,
 video,
@@ -52,6 +52,7 @@ canvas,
 svg {
   display: block;
   max-width: 100%;
+  height: auto;
 }
 
 /* Make form controls inherit the site's typography. */
@@ -62,86 +63,121 @@ select {
   font: inherit;
 }
 
-/* Give the site header a sticky, balanced navigation layout. */
+/* Keep the sticky header compact and place the brand beside the menu toggle. */
 header {
   position: sticky;
   z-index: 10;
   top: 0;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-4);
-  padding: var(--space-3) max(var(--space-4), calc((100% - var(--max-width)) / 2));
+  gap: var(--space-2) var(--space-3);
+  padding: var(--space-3) max(var(--space-3), calc((100% - var(--max-width)) / 2));
   border-bottom: 1px solid #e1e7f0;
-  background: rgb(255 255 255 / 92%);
+  background: rgb(255 255 255 / 94%);
   backdrop-filter: blur(12px);
 }
 
-/* Keep the portfolio name compact in the header. */
+/* Keep the brand readable and on one line at narrow widths. */
 header h1 {
   color: var(--color-text);
-  font-size: clamp(1.25rem, 2vw, 1.65rem);
+  font-size: clamp(1.25rem, 5vw, 1.65rem);
   letter-spacing: -0.04em;
   line-height: 1.2;
   white-space: nowrap;
 }
 
-/* Arrange navigation links in a clean horizontal row. */
+/* Style the mobile navigation toggle as a clear, touch-friendly control. */
+.nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 2.75rem;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid #d5deeb;
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-weight: 650;
+  cursor: pointer;
+}
+
+/* Draw a compact three-line hamburger icon. */
+.nav-toggle-icon {
+  width: 1rem;
+  height: 2px;
+  background: currentColor;
+  box-shadow: 0 -5px currentColor, 0 5px currentColor;
+}
+
+/* Hide the mobile menu until its controlling button opens it. */
+#primary-navigation {
+  display: none;
+  flex-basis: 100%;
+}
+
+/* Show the navigation when the mobile toggle is expanded. */
+.menu-open #primary-navigation {
+  display: block;
+}
+
+/* Arrange mobile navigation links in a simple vertical list. */
 nav ul {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: var(--space-1) var(--space-4);
-  padding: 0;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-2) 0 0;
   list-style: none;
 }
 
-/* Style navigation links as compact, readable controls. */
+/* Give mobile navigation links generous tap targets. */
 nav a {
-  display: inline-block;
-  padding: var(--space-1) 0;
+  display: block;
+  padding: var(--space-2) var(--space-1);
   color: var(--color-muted);
   font-size: 0.95rem;
   font-weight: 600;
   text-decoration: none;
 }
 
-/* Center the main content and give it comfortable page gutters. */
+/* Center the main content with narrow-screen side gutters. */
 main {
-  width: min(100% - 2 * var(--space-4), var(--max-width));
+  width: min(100% - 2 * var(--space-3), var(--max-width));
   margin-inline: auto;
-  padding-block: var(--space-6);
+  padding-block: var(--space-4);
 }
 
-/* Present each content section as a distinct surface. */
+/* Style content panels and keep section headings clear of the sticky header. */
 main section {
-  margin-bottom: var(--space-5);
-  padding: clamp(var(--space-4), 5vw, var(--space-6));
+  margin-bottom: var(--space-4);
+  padding: var(--space-4);
+  scroll-margin-top: 9rem;
   border: 1px solid #e7ecf3;
   border-radius: var(--radius);
   background: var(--color-surface);
   box-shadow: 0 12px 32px rgb(23 35 56 / 5%);
 }
 
-/* Set a fluid type scale for the main heading. */
+/* Scale the portfolio heading smoothly from mobile to desktop. */
 main h1 {
-  font-size: clamp(2.5rem, 7vw, 4.5rem);
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
   letter-spacing: -0.06em;
   line-height: 1.05;
 }
 
-/* Set fluid section heading sizes and spacing. */
+/* Scale section headings smoothly across viewport sizes. */
 h2 {
   margin-bottom: var(--space-3);
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-size: clamp(1.75rem, 6vw, 2.5rem);
   letter-spacing: -0.045em;
   line-height: 1.15;
 }
 
-/* Set fluid project heading sizes. */
+/* Scale project headings smoothly across viewport sizes. */
 h3 {
   margin-bottom: var(--space-2);
-  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  font-size: clamp(1.2rem, 4vw, 1.5rem);
   letter-spacing: -0.025em;
   line-height: 1.25;
 }
@@ -151,26 +187,17 @@ main section p {
   color: var(--color-muted);
 }
 
-/* Arrange the introduction beside its portrait on wide screens. */
+/* Keep the introduction stacked on small screens. */
 #about {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(180px, 0.65fr);
-  align-items: center;
-  gap: var(--space-3) var(--space-6);
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
 }
 
-/* Keep the about heading and biography in the text column. */
-#about h2,
-#about p {
-  grid-column: 1;
-}
-
-/* Crop the portrait into a consistent, softly rounded shape. */
+/* Keep the portrait fluid and preserve its original aspect ratio. */
 #about img {
-  grid-column: 2;
-  grid-row: 1 / span 2;
-  width: 100%;
-  max-height: 320px;
+  width: min(100%, 320px);
+  height: auto;
   border-radius: calc(var(--radius) * 0.75);
   object-fit: cover;
 }
@@ -195,27 +222,27 @@ main section p {
   font-weight: 650;
 }
 
-/* Lay project cards out responsively across available space. */
+/* Keep project cards in a single column on small screens. */
 #projects {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: var(--space-4);
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
 }
 
-/* Let the projects heading span the full card grid. */
+/* Keep the projects heading above the full card list. */
 #projects h2 {
-  grid-column: 1 / -1;
   margin-bottom: 0;
 }
 
 /* Style each project as an elevated interactive card. */
 #projects article {
   display: flex;
+  min-width: 0;
+  min-height: 190px;
   flex-direction: column;
   align-items: flex-start;
   gap: var(--space-2);
-  min-height: 190px;
-  padding: var(--space-4);
+  padding: var(--space-3);
   border: 1px solid #e7ecf3;
   border-radius: calc(var(--radius) * 0.75);
   background: var(--color-surface);
@@ -223,7 +250,7 @@ main section p {
   transition: transform 180ms ease, box-shadow 180ms ease;
 }
 
-/* Let project links settle at the bottom of their cards. */
+/* Keep project links at the bottom of their cards. */
 #projects article a {
   margin-top: auto;
 }
@@ -238,21 +265,22 @@ main section p {
   list-style: none;
 }
 
-/* Style all links with a clear accent color. */
+/* Style links consistently with the portfolio accent color. */
 a {
   color: var(--color-accent);
   font-weight: 650;
   text-underline-offset: 0.2em;
-  transition: color 160ms ease, text-decoration-color 160ms ease;
+  transition: color 160ms ease;
 }
 
-/* Make pointer hover feedback visible on links and project cards. */
+/* Make pointer hover feedback visible on links. */
 a:hover {
   color: #1749a8;
 }
 
-/* Provide a high-contrast keyboard focus indicator. */
-a:focus-visible {
+/* Provide high-contrast keyboard focus indicators on links and buttons. */
+a:focus-visible,
+button:focus-visible {
   border-radius: 0.2rem;
   outline: 3px solid #f0a92e;
   outline-offset: 4px;
@@ -273,38 +301,108 @@ footer {
   text-align: center;
 }
 
-/* Stack the introduction and tighten navigation on narrow screens. */
-@media (max-width: 640px) {
+/* Add tablet spacing and place the introduction beside its portrait. */
+@media (min-width: 768px) {
+  /* Give the tablet header a single-row layout and show the full navigation. */
   header {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: var(--space-2);
+    flex-wrap: nowrap;
+    gap: var(--space-4);
+    padding-inline: max(var(--space-4), calc((100% - var(--max-width)) / 2));
   }
 
+  /* Replace the mobile menu button with the always-visible navigation. */
+  .nav-toggle {
+    display: none;
+  }
+
+  /* Keep the tablet navigation in the header row. */
+  #primary-navigation {
+    display: block;
+    flex-basis: auto;
+  }
+
+  /* Arrange tablet navigation links horizontally. */
   nav ul {
-    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
     gap: var(--space-1) var(--space-3);
+    padding: 0;
   }
 
+  /* Give navigation links compact horizontal spacing on tablet. */
+  nav a {
+    padding: var(--space-1);
+  }
+
+  /* Add breathing room to the main tablet layout. */
   main {
-    padding-block: var(--space-4);
+    padding-block: var(--space-5);
   }
 
+  /* Increase section separation and anchor offset for the tablet header. */
+  main section {
+    margin-bottom: var(--space-5);
+    padding: clamp(var(--space-4), 5vw, var(--space-6));
+    scroll-margin-top: 7rem;
+  }
+
+  /* Lay out the biography and portrait in two columns. */
   #about {
-    grid-template-columns: 1fr;
-    gap: var(--space-3);
+    grid-template-columns: minmax(0, 1fr) minmax(180px, 0.65fr);
+    align-items: center;
+    gap: var(--space-3) var(--space-5);
   }
 
-  #about img {
+  /* Keep biography text in the first tablet column. */
+  #about h2,
+  #about p {
     grid-column: 1;
-    grid-row: auto;
-    width: min(100%, 320px);
-    max-height: none;
+  }
+
+  /* Place the portrait beside the biography on tablet. */
+  #about img {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  /* Use the requested responsive project-card grid on tablet and wider. */
+  #projects {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--space-4);
+  }
+
+  /* Let the project heading span every available card column. */
+  #projects h2 {
+    grid-column: 1 / -1;
   }
 }
 
-/* Respect reduced-motion preferences for animated transitions. */
+/* Increase whitespace and align the desktop content to the wider canvas. */
+@media (min-width: 1024px) {
+  /* Expand section spacing for larger displays. */
+  main {
+    padding-block: var(--space-6);
+  }
+
+  /* Use a larger anchor offset and spacious panels on desktop. */
+  main section {
+    margin-bottom: var(--space-5);
+    padding: var(--space-6);
+    scroll-margin-top: 6rem;
+  }
+
+  /* Give desktop project cards more comfortable internal spacing. */
+  #projects article {
+    padding: var(--space-4);
+  }
+}
+
+/* Respect reduced-motion preferences for scrolling and transitions. */
 @media (prefers-reduced-motion: reduce) {
+  /* Remove nonessential motion for visitors who request reduced motion. */
   *,
   *::before,
   *::after {
