@@ -1,6 +1,5 @@
 const header = document.querySelector("header");
 const toggle = document.querySelector(".nav-toggle");
-const navigation = document.querySelector("#primary-navigation");
 
 toggle.addEventListener("click", () => {
   const expanded = toggle.getAttribute("aria-expanded") === "true";
@@ -8,8 +7,8 @@ toggle.addEventListener("click", () => {
   header.classList.toggle("menu-open", !expanded);
 });
 
-navigation.addEventListener("click", (event) => {
-  if (event.target.closest("a")) {
+document.addEventListener("click", (event) => {
+  if (event.target.closest(".skip-link, #primary-navigation a")) {
     toggle.setAttribute("aria-expanded", "false");
     header.classList.remove("menu-open");
   }
